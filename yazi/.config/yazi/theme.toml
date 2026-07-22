@@ -1,0 +1,26 @@
+[icon]
+dirs = [
+	{ name = "HackTheBox", text = '󰆧'},
+	{ name = "VPNs", text = '󰖂'},
+	{ name = "Arsenal", text = '󰞇'},
+	{ name = "Coding", text = ''},
+	{ name = "FahemSec", text = '󰧑'},
+	{ name = "CTFs", text = ''},
+	{ name = "www", text = '󰖟'},
+	{ name = "Documents", text = '󰈙'},
+	{ name = "Downloads", text = ''},
+	{ name = "Music", text = ''},
+	{ name = "Pictures", text = ''},
+	# ...
+]
+
+[help]
+on      = { fg = "#89b4fa", bold = true }
+run     = { fg = "#cba6f7" }
+desc    = { fg = "#cdd6f4" }
+hovered = { fg = "#f5e0dc", bg = "#313244", bold = true }
+footer  = { fg = "#6c7086", italic = true }
+
+icon_info  = "󰋼"
+icon_warn  = ""
+icon_error = ""

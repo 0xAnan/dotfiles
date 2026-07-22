@@ -1,0 +1,73 @@
+* {
+    font-family: JetBrains Mono, Symbols Nerd Font;
+    font-size: 24px;
+    transition-property: background-color;
+    transition-duration: 0.7s;
+}
+
+window {
+    background-color: #11111b;
+}
+
+button {
+    background-color: #11111b;
+    border-style: solid;
+    border-radius: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20%;
+    margin: 15px;
+    color: #cdd6f4;
+}
+
+button:active,
+button:hover,
+button:focus {
+    background-color: #cdd6f4;
+    color: #11111b;
+}
+
+/* --- BUTTON ICONS --- */
+
+#lock {
+    background-image: url("/home/anan/.config/assets/wlogout/assets/lock.png");
+}
+#lock:hover {
+    background-image: url("/home/anan/.config/assets/wlogout/assets/lock-hover.png");
+}
+
+#logout {
+    background-image: url("/home/anan/.config/assets/wlogout/assets/logout.png");
+}
+#logout:hover {
+    background-image: url("/home/anan/.config/assets/wlogout/assets/logout-hover.png");
+}
+
+#suspend {
+    background-image: url("/home/anan/.config/assets/wlogout/assets/sleep.png");
+}
+#suspend:hover {
+    background-image: url("/home/anan/.config/assets/wlogout/assets/sleep-hover.png");
+}
+
+#shutdown {
+    background-image: url("/home/anan/.config/assets/wlogout/assets/power.png");
+}
+#shutdown:hover {
+    background-image: url("/home/anan/.config/assets/wlogout/assets/power-hover.png");
+}
+
+#reboot {
+    background-image: url("/home/anan/.config/assets/wlogout/assets/restart.png");
+}
+#reboot:hover {
+    background-image: url("/home/anan/.config/assets/wlogout/assets/restart-hover.png");
+}
+
+#exit {
+    background-image: url("/home/anan/.config/assets/wlogout/assets/restart.png");
+}
+#exit:hover {
+    background-image: url("/home/anan/.config/assets/wlogout/assets/restart-hover.png");
+}
+

@@ -1,0 +1,19 @@
+# Backup files
+*.bak*
+*~
+*.swp
+*.swo
+
+# Neovim plugin lock (regenerated automatically)
+nvim/.config/nvim/lazy-lock.json
+
+# Tmux plugins (installed by tpm)
+tmux/.config/tmux/plugins/
+
+# Cava shader cache
+cava/.config/cava/shaders/
+
+# Yazi plugins (installed separately)
+yazi/.config/yazi/plugins/
+__pycache__/
+*.pyc

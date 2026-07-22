@@ -1,0 +1,113 @@
+[mgr]
+prepend_keymap = [
+	# Essentials: selection and everyday file operations
+	{ on = "<Space>", run = [ "toggle", "arrow 1" ], desc = "ESSENTIAL · Select/unselect item, then move down" },
+	{ on = "<C-a>",   run = "toggle_all --state=on", desc = "ESSENTIAL · Select every item in this folder" },
+	{ on = "<C-r>",   run = "toggle_all", desc = "ESSENTIAL · Invert selection (selected ↔ unselected)" },
+	{ on = "<Esc>",   run = "escape", desc = "ESSENTIAL · Clear selection or cancel current action" },
+	{ on = "v",       run = "visual_mode", desc = "ESSENTIAL · Start selecting a continuous range" },
+	{ on = "V",       run = "visual_mode --unset", desc = "ESSENTIAL · Start unselecting a continuous range" },
+	{ on = "y", run = [ 'shell -- for path in %s; do printf "file://%%s\n" "$path"; done | wl-copy --type text/uri-list', "yank" ], desc = "ESSENTIAL · Copy in Yazi and to system clipboard", for = "linux" },
+	{ on = "x",       run = "yank --cut", desc = "ESSENTIAL · Cut selected items (then p to move)" },
+	{ on = "p",       run = "paste", desc = "ESSENTIAL · Paste copied items or move cut items here" },
+	{ on = "P",       run = "paste --force", desc = "ESSENTIAL · Paste here and overwrite conflicts" },
+	{ on = "Y",       run = "unyank", desc = "ESSENTIAL · Cancel current copy/cut operation" },
+	{ on = "X",       run = "unyank", desc = "ESSENTIAL · Cancel current copy/cut operation" },
+	{ on = "d",       run = "remove", desc = "ESSENTIAL · Move selected items to trash" },
+	{ on = "D",       run = "remove --permanently", desc = "ESSENTIAL · Permanently delete selected items" },
+	{ on = "a",       run = "create", desc = "ESSENTIAL · Create file (end name with / for folder)" },
+	{ on = "r",       run = "rename --cursor=before_ext", desc = "ESSENTIAL · Rename selected item(s)" },
+	{ on = "<Enter>", run = "open", desc = "ESSENTIAL · Open selected/hovered item" },
+	{ on = "o",       run = "open", desc = "ESSENTIAL · Open selected/hovered item" },
+	{ on = "O",       run = "open --interactive", desc = "ESSENTIAL · Choose which app opens the item" },
+	{ on = ".",       run = "hidden toggle", desc = "ESSENTIAL · Show/hide hidden files" },
+
+	# Navigation
+	{ on = "j",            run = "arrow next", desc = "NAVIGATION · Move down one item" },
+	{ on = "k",            run = "arrow prev", desc = "NAVIGATION · Move up one item" },
+	{ on = "h",            run = "leave", desc = "NAVIGATION · Go to parent folder" },
+	{ on = "l",            run = "enter", desc = "NAVIGATION · Enter hovered folder" },
+	{ on = [ "g", "g" ],  run = "arrow top", desc = "NAVIGATION · Jump to first item" },
+	{ on = "G",            run = "arrow bot", desc = "NAVIGATION · Jump to last item" },
+	{ on = "H",            run = "back", desc = "NAVIGATION · Go back in folder history" },
+	{ on = "L",            run = "forward", desc = "NAVIGATION · Go forward in folder history" },
+	{ on = "z",            run = "plugin fzf", desc = "NAVIGATION · Quickly jump with fzf" },
+	{ on = "Z",            run = "plugin zoxide", desc = "NAVIGATION · Jump to a frequent folder" },
+
+	# Find, filter, and recursive search
+	{ on = "f",      run = "filter --smart", desc = "SEARCH · Filter items shown in this folder" },
+	{ on = "?",      run = "find --previous --smart", desc = "SEARCH · Find previous name in this folder" },
+	{ on = "<F1>",   run = "find --previous --smart", desc = "SEARCH · Find previous name in this folder" },
+	{ on = "n",      run = "find_arrow", desc = "SEARCH · Jump to next match" },
+	{ on = "N",      run = "find_arrow --previous", desc = "SEARCH · Jump to previous match" },
+	{ on = "s",      run = "search --via=fd", desc = "SEARCH · Search filenames inside subfolders" },
+	{ on = "S",      run = "search --via=rg", desc = "SEARCH · Search file contents inside subfolders" },
+	{ on = "<C-s>",  run = "escape --search", desc = "SEARCH · Cancel recursive search" },
+
+	# Copying paths and creating links
+	{ on = [ "c", "c" ], run = "copy path", desc = "PATHS · Copy full file path" },
+	{ on = [ "c", "d" ], run = "copy dirname", desc = "PATHS · Copy parent-folder path" },
+	{ on = [ "c", "f" ], run = "copy filename", desc = "PATHS · Copy filename" },
+	{ on = [ "c", "n" ], run = "copy name_without_ext", desc = "PATHS · Copy filename without extension" },
+	{ on = "-",            run = "link", desc = "PATHS · Symlink copied items using absolute paths" },
+	{ on = "_",            run = "link --relative", desc = "PATHS · Symlink copied items using relative paths" },
+	{ on = "<C-->",        run = "hardlink", desc = "PATHS · Hardlink copied items" },
+
+	# Tabs
+	{ on = [ "t", "t" ], run = "tab_create --current", desc = "TABS · Open a new tab in this folder" },
+	{ on = [ "t", "r" ], run = "tab_rename --interactive", desc = "TABS · Rename current tab" },
+	{ on = "1", run = "tab_switch 0", desc = "TABS · Switch to tab 1" },
+	{ on = "2", run = "tab_switch 1", desc = "TABS · Switch to tab 2" },
+	{ on = "3", run = "tab_switch 2", desc = "TABS · Switch to tab 3" },
+	{ on = "4", run = "tab_switch 3", desc = "TABS · Switch to tab 4" },
+	{ on = "5", run = "tab_switch 4", desc = "TABS · Switch to tab 5" },
+	{ on = "6", run = "tab_switch 5", desc = "TABS · Switch to tab 6" },
+	{ on = "7", run = "tab_switch 6", desc = "TABS · Switch to tab 7" },
+	{ on = "8", run = "tab_switch 7", desc = "TABS · Switch to tab 8" },
+	{ on = "9", run = "tab_switch 8", desc = "TABS · Switch to tab 9" },
+	{ on = "[", run = "tab_switch -1 --relative", desc = "TABS · Switch to previous tab" },
+	{ on = "]", run = "tab_switch 1 --relative", desc = "TABS · Switch to next tab" },
+	{ on = "{", run = "tab_swap -1", desc = "TABS · Move current tab left" },
+	{ on = "}", run = "tab_swap 1", desc = "TABS · Move current tab right" },
+	{ on = "<C-c>", run = "close", desc = "TABS · Close current tab" },
+
+	# Preview, display, and common sorts
+	{ on = "<Tab>",       run = "spot", desc = "VIEW · Show detailed file information" },
+	{ on = "K",           run = "seek -5", desc = "VIEW · Scroll preview up" },
+	{ on = "J",           run = "seek 5", desc = "VIEW · Scroll preview down" },
+	{ on = [ "m", "s" ], run = "linemode size", desc = "VIEW · Show file sizes" },
+	{ on = [ "m", "p" ], run = "linemode permissions", desc = "VIEW · Show permissions" },
+	{ on = [ "m", "m" ], run = "linemode mtime", desc = "VIEW · Show modification times" },
+	{ on = [ "m", "o" ], run = "linemode owner", desc = "VIEW · Show owners" },
+	{ on = [ "m", "n" ], run = "linemode none", desc = "VIEW · Hide extra metadata" },
+	{ on = [ ",", "a" ], run = "sort alphabetical --reverse=no", desc = "SORT · Name, A → Z" },
+	{ on = [ ",", "A" ], run = "sort alphabetical --reverse=yes", desc = "SORT · Name, Z → A" },
+	{ on = [ ",", "m" ], run = [ "sort mtime --reverse=no", "linemode mtime" ], desc = "SORT · Oldest modified first" },
+	{ on = [ ",", "M" ], run = [ "sort mtime --reverse=yes", "linemode mtime" ], desc = "SORT · Newest modified first" },
+	{ on = [ ",", "s" ], run = [ "sort size --reverse=no", "linemode size" ], desc = "SORT · Smallest first" },
+	{ on = [ ",", "S" ], run = [ "sort size --reverse=yes", "linemode size" ], desc = "SORT · Largest first" },
+
+	# App and shell commands
+	{ on = ";",    run = "shell --interactive", desc = "OTHER · Run a shell command in background" },
+	{ on = ":",    run = "shell --block --interactive", desc = "OTHER · Run a shell command and wait" },
+	{ on = "w",    run = "tasks:show", desc = "OTHER · Show file-operation task manager" },
+	{ on = "q",    run = "quit", desc = "OTHER · Quit Yazi and keep current folder" },
+	{ on = "Q",    run = "quit --no-cwd-file", desc = "OTHER · Quit without changing shell folder" },
+	{ on = "/",            run = "plugin cheatsheet", desc = "OTHER · Open boxed cheatsheet" },
+	{ on = "~",            run = "plugin cheatsheet", desc = "OTHER · Open boxed cheatsheet" },
+	{ on = [ "g", "?" ],  run = "help", desc = "OTHER · Open native searchable help" },
+]
+
+[input]
+prepend_keymap = [
+	{ on = [ "j", "j" ], run = "escape", desc = "Leave insert mode (same as Esc)" },
+]
+
+[help]
+prepend_keymap = [
+	{ on = [ "g", "g" ], run = "arrow top", desc = "Go to top" },
+	{ on = "G",           run = "arrow bot", desc = "Go to bottom" },
+	{ on = "<C-u>",       run = "arrow -50%", desc = "Move up half a page" },
+	{ on = "<C-d>",       run = "arrow 50%", desc = "Move down half a page" },
+	{ on = "/",           run = "filter", desc = "Search help items or category names" },
+]
