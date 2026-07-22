@@ -1,4 +1,4 @@
-# 🏠 anan's dotfiles
+# dotfiles
 
 Arch Linux + Hyprland rice managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
@@ -17,34 +17,40 @@ Arch Linux + Hyprland rice managed with [GNU Stow](https://www.gnu.org/software/
 | `nvim` | Neovim (Lazy) |
 | `tmux` | Terminal multiplexer + scripts |
 | `starship` | Shell prompt |
-| `fish` | Fish shell |
 | `yazi` | File manager |
 | `bat` | Cat replacement |
 | `zsh` | Zsh config (.zshrc) |
 
-## Usage
-
-### Install on a fresh system
+## Install on a fresh system
 
 ```bash
+# Install stow
+sudo pacman -S stow
+
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/dotfiles
+git clone git@github.com:0xAnan/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+
+# Back up any existing configs that would conflict
+for pkg in hypr waybar dunst kitty swaync wlogout tofi cava nvim tmux starship yazi bat; do
+    [ -e ~/.config/$pkg ] && mv ~/.config/$pkg ~/.config/${pkg}.bak
+done
+[ -f ~/.zshrc ] && mv ~/.zshrc ~/.zshrc.bak
 
 # Stow everything
-cd ~/dotfiles
 stow */
 
 # Or stow individual packages
 stow hypr waybar kitty
 ```
 
-### Unstow a package
+## Unstow a package
 
 ```bash
 stow -D waybar   # removes symlinks for waybar
 ```
 
-### Add a new config
+## Add a new config
 
 ```bash
 mkdir -p ~/dotfiles/newpkg/.config/newpkg
