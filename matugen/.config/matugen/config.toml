@@ -5,16 +5,6 @@ input_path = "~/.config/matugen/templates/hyprland-colors.conf"
 output_path = "~/.config/hypr/colors.conf"
 post_hook = "hyprctl reload"
 
-[templates.kitty-theme]
-input_path = "~/.config/matugen/templates/kitty-theme.conf"
-output_path = "~/.config/kitty/theme.conf"
-post_hook = "pkill -SIGUSR1 kitty"
-
-[templates.waybar-style]
-input_path = "~/.config/matugen/templates/waybar-style.css"
-output_path = "~/.config/waybar/style.css"
-post_hook = "pkill -SIGUSR2 waybar"
-
 [templates.dunstrc]
 input_path = "~/.config/matugen/templates/dunstrc"
 output_path = "~/.config/dunst/dunstrc"
