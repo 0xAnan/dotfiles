@@ -9,12 +9,12 @@
 
 window#waybar {
     background: rgba(0, 0, 0, 0);
-    color: #e2e2e9;
+    color: #e6e1e9;
 }
 
 #workspaces button {
     padding: 5px;
-    color: #8e9099;
+    color: #938f99;
     margin-right: 5px;
 }
 
@@ -35,24 +35,24 @@ window#waybar {
 }
 
 #workspaces button.active {
-    color: #c4c6d0;
+    color: #cac4cf;
 }
 
 #workspaces button.focused {
-    color: #c4c6d0;
-    background: #bfc6dc;
+    color: #cac4cf;
+    background: #cbc3dc;
     border-radius: 10px;
 }
 
 #workspaces button.urgent {
-    color: #0f2f60;
-    background: #debcdf;
+    color: #34275e;
+    background: #eeb8ca;
     border-radius: 10px;
 }
 
 #workspaces button:hover {
-    background: #e2e2e9;
-    color: #111318;
+    background: #e6e1e9;
+    color: #141318;
     border-radius: 10px;
 }
 
@@ -70,7 +70,7 @@ window#waybar {
 #tray,
 #backlight,
 #custom-notification {
-    background: #1e2025;
+    background: #201f24;
     padding: 0px 10px;
     margin: 3px 0px;
     margin-top: 5px;
@@ -86,7 +86,7 @@ window#waybar {
 }
 
 #custom-language {
-    color: #c4c6d0;
+    color: #cac4cf;
     border-radius: 10px;
     margin-left: 6px;
     margin-right: 0px;
@@ -94,7 +94,7 @@ window#waybar {
 }
 
 #workspaces {
-    background: #1e2025;
+    background: #201f24;
     border-radius: 10px;
     margin-left: 6px;
     padding-right: 0px;
@@ -122,25 +122,25 @@ window#waybar {
 }
 
 #clock {
-    color: #c4c6d0;
+    color: #cac4cf;
     border-radius: 10px 10px 10px 10px;
     margin-left: 5px;
     border-right: 0px;
 }
 
 #network {
-    color: #c4c6d0;
+    color: #cac4cf;
     border-radius: 10px 0px 0px 10px;
 }
 
 #pulseaudio {
-    color: #c4c6d0;
+    color: #cac4cf;
     border-left: 0px;
     border-right: 0px;
 }
 
 #pulseaudio.microphone {
-    color: #c4c6d0;
+    color: #cac4cf;
     border-radius: 0px 10px 10px 0px;
     border-left: 0px;
     border-right: 0px;
@@ -148,7 +148,7 @@ window#waybar {
 }
 
 #battery {
-    color: #c4c6d0;
+    color: #cac4cf;
 }
 
 #battery {
@@ -157,8 +157,8 @@ window#waybar {
 }
 
 #mpris {
-    background: #1e2025;
-    color: #c4c6d0;
+    background: #201f24;
+    color: #cac4cf;
     border-radius: 10px;
     padding: 0px 10px;
     margin-right: 10px;
@@ -168,13 +168,13 @@ window#waybar {
 }
 
 #custom-notification {
-    color: #c4c6d0;
+    color: #cac4cf;
     border-radius: 10px;
     margin-left: 6px;
     margin-right: 6px;
 }
 
 #custom-notification:hover {
-    background: #282a2f;
-    color: #e2e2e9;
+    background: #2b292f;
+    color: #e6e1e9;
 }
