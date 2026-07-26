@@ -1,0 +1,104 @@
+configuration {
+    show-icons: false;
+    font: "JetBrainsMono Nerd Font 18";
+}
+
+* {
+    bg: #11111bf2;
+    panel: #1e1e2ef2;
+    panel-alt: #181825f2;
+    border: #313244;
+    foreground: #cdd6f4;
+    muted: #6c7086;
+    selected: #89b4fa;
+    selected-bg: #313244;
+    pinned: #f5c2e7;
+    pinned-bg: #30263a;
+    accent: #a6e3a1;
+    transparent: #00000000;
+}
+
+window {
+    width: 62%;
+    location: center;
+    anchor: center;
+    background-color: @panel;
+    border: 2px;
+    border-color: @border;
+    border-radius: 18px;
+    padding: 0;
+}
+
+mainbox {
+    background-color: @transparent;
+    padding: 22px;
+    spacing: 14px;
+    children: [ inputbar, listview ];
+}
+
+inputbar {
+    background-color: @panel-alt;
+    border-radius: 12px;
+    padding: 12px 14px;
+    text-color: @foreground;
+    spacing: 10px;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    background-color: @transparent;
+    text-color: @accent;
+}
+
+entry {
+    background-color: @transparent;
+    text-color: @foreground;
+    cursor-color: @selected;
+}
+
+message {
+    background-color: @transparent;
+    text-color: @foreground;
+}
+
+textbox {
+    background-color: @transparent;
+    text-color: @muted;
+}
+
+listview {
+    background-color: @transparent;
+    lines: 10;
+    spacing: 8px;
+    fixed-height: true;
+    scrollbar: false;
+}
+
+element {
+    background-color: @transparent;
+    text-color: @foreground;
+    border-radius: 10px;
+    padding: 9px 12px;
+    orientation: horizontal;
+    children: [ element-text ];
+}
+
+element selected {
+    background-color: @selected-bg;
+    text-color: @selected;
+}
+
+element active {
+    background-color: @pinned-bg;
+    text-color: @pinned;
+}
+
+element active selected {
+    background-color: @pinned-bg;
+    text-color: @pinned;
+}
+
+element-text {
+    background-color: inherit;
+    text-color: inherit;
+}

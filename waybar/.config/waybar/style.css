@@ -47,7 +47,7 @@ window#waybar {
 
 #workspaces button {
     padding: 5px;
-    color: #a6adc8;
+    color: #585b70;
     margin-right: 5px;
 }
 
@@ -79,7 +79,7 @@ window#waybar {
 
 #workspaces button.urgent {
     color: #11111b;
-    background: #f38ba8;
+    background: #74c7ec;
     border-radius: 10px;
 }
 

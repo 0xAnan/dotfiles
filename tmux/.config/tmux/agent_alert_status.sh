@@ -9,6 +9,12 @@ alerts_file="$cache_dir/alerts"
 states_file="$cache_dir/states"
 mkdir -p "$cache_dir" || exit 0
 
+# Popups temporarily use a static status bar.  Avoid changing agent/window
+# options underneath them, which can force tmux to repaint popup borders.
+if [[ "$(tmux show-options -gqv @popup_active 2>/dev/null)" == 1 ]]; then
+	exit 0
+fi
+
 tmp_alerts="$alerts_file.$$"
 tmp_states="$states_file.$$"
 : > "$tmp_alerts" || exit 0

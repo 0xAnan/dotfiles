@@ -10,7 +10,17 @@ target="${2:-$(tmux show-options -gqv @rename_popup_target 2>/dev/null)}"
 edit_name() {
 	local label="$1"
 	local current="$2"
-	local name status
+	local name status header_current
+
+	# Agent TUIs often put the whole task description in the pane title.  The
+	# popup is only 60 columns wide, so showing that title alongside the key
+	# hints on one line can wrap and visually overwrite the popup's top edge.
+	# Only shorten the header copy; the complete value remains in the editor.
+	header_current="$(printf '%s' "$current" | tr '\r\n\t' '   ')"
+	[[ -n "$header_current" ]] || header_current='<empty>'
+	if (( ${#header_current} > 38 )); then
+		header_current="${header_current:0:37}…"
+	fi
 
 	# fzf behaves consistently inside a tmux popup, visibly preloads the old
 	# value, and gives Escape a real cancel action.  --phony makes this an input
@@ -22,7 +32,7 @@ edit_name() {
 			--print-query \
 			--query="$current" \
 			--prompt="$label › " \
-			--header="Current: ${current:-<empty>}   •   Enter: save   •   Esc: cancel" \
+			--header="Current: $header_current"$'\n'"Enter: save   •   Esc: cancel" \
 			--header-first \
 			--info=hidden \
 			--layout=reverse \

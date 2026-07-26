@@ -15,6 +15,17 @@ WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 # hide EOL sign ('%')
 PROMPT_EOL_MARK=""
 
+# Recover GUI session variables when an interactive shell is opened from an
+# existing tmux pane that was originally attached without the desktop env.
+# Clipboard-aware tools such as Codex, wl-copy, and wl-paste need these.
+if [[ -z "${WAYLAND_DISPLAY:-}" && -S /run/user/1000/wayland-1 ]]; then
+    export XDG_RUNTIME_DIR=/run/user/1000
+    export WAYLAND_DISPLAY=wayland-1
+fi
+if [[ -z "${DBUS_SESSION_BUS_ADDRESS:-}" && -S /run/user/1000/bus ]]; then
+    export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+fi
+
 # configure key keybindings
 bindkey -e                                        # emacs key bindings
 bindkey ' ' magic-space                           # do history expansion on space
@@ -298,6 +309,9 @@ xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
 esac
 
 precmd() {
+    # Force Kitty / terminal cursor shape to blinking beam (|)
+    echo -ne '\e[5 q'
+
     # Print the previously configured title
     print -Pnr -- "$TERM_TITLE"
 
@@ -363,7 +377,32 @@ if [ -x /usr/bin/dircolors ]; then
     alias tree='exa --tree --hyperlink'
     alias fzf="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
     alias quartzSync='cd ~/Documents/0xAnan-Blog && npx quartz sync --no-pull'
-    alias clp='wl-copy <' 
+    clp() {
+        local copied_from_stdin=0
+
+        export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/1000}"
+        if [[ -z "${WAYLAND_DISPLAY:-}" && -S "${XDG_RUNTIME_DIR}/wayland-1" ]]; then
+            export WAYLAND_DISPLAY=wayland-1
+        fi
+        export DBUS_SESSION_BUS_ADDRESS="${DBUS_SESSION_BUS_ADDRESS:-unix:path=${XDG_RUNTIME_DIR}/bus}"
+
+        if [[ $# -eq 0 ]]; then
+            wl-copy
+            return
+        fi
+
+        if [[ $# -ne 1 ]]; then
+            print -u2 "usage: clp [file]"
+            return 2
+        fi
+
+        if [[ ! -r "$1" ]]; then
+            print -u2 "clp: cannot read: $1"
+            return 1
+        fi
+
+        wl-copy < "$1"
+    }
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
     alias y='yazi'
@@ -401,8 +440,10 @@ alias pyweb='python3 -m http.server 80'
 alias initScan='nmap -A -T5 -vv -oA enum/nmap/init'
 alias bh-up='docker-compose -f ~/Arsenal/bloodhoundce/docker-compose.yml up -d;echo "URL: http://localhost:8989"'
 alias bh-down='docker-compose -f ~/Arsenal/bloodhoundce/docker-compose.yml down'
-alias waybar-restart='pkill waybar && waybar >/dev/null 2>&1 & disown'
+alias waybar-restart='pkill waybar; sleep 0.3; HYPRLAND_INSTANCE_SIGNATURE=$(ls -1 /run/user/1000/hypr/ | head -1) WAYLAND_DISPLAY=wayland-1 XDG_RUNTIME_DIR=/run/user/1000 waybar >/dev/null 2>&1 & disown'
 alias payloads='penelope -a -i tun0 -p'
+alias sudo='sudo env PATH="$PATH" PYTHONDONTWRITEBYTECODE=1 '
+
 
 # enable auto-suggestions based on the history
 if [ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then

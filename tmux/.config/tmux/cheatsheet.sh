@@ -15,7 +15,7 @@ line() {
 }
 
 section() {
-    printf '\n%s%s%s%s\n' "$bold" "$mauve" "$1" "$reset"
+    printf '%s%s%s%s\n' "$bold" "$mauve" "$1" "$reset"
     printf '%s%s%s\n' "$muted" "────────────────────────────────────────" "$reset"
 }
 
@@ -24,12 +24,22 @@ printf '%s%s tmux cheatsheet %s\n' "$bold" "$mauve" "$reset"
 printf '%sPrefix: %sC-a%s\n' "$muted" "$yellow" "$reset"
 
 section "Sessions"
+line "tmux new -s NAME" "create a session from the shell"
 line "C-a s" "session picker"
 line "C-a w" "window picker"
-line "C-a :" "command prompt"
-line ":new -s name" "create a named session"
-line ":attach -t name" "attach to session"
-line ":kill-session" "kill current session"
+line "C-a $" "rename current session"
+line "tmux attach -t NAME" "attach from the shell"
+
+section "Command Prompt — C-a ;"
+line "new-session -s NAME" "create a named session"
+line "rename-session [-t OLD] NEW" "rename current or another session"
+line "switch-client -t NAME" "switch to another session"
+line "kill-session -t NAME" "kill a session"
+line "new-window -n NAME" "create a named window"
+line "rename-window NAME" "rename current window"
+line "split-window -h / -v" "split horizontally / vertically"
+line "list-sessions" "show all sessions"
+line "source-file ~/.tmux.conf" "reload tmux configuration"
 
 section "Windows"
 line "C-a c" "new window"
