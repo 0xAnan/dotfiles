@@ -78,7 +78,30 @@ decode_info() {
         hist)
             printf '%s' "$payload" | cliphist decode
             ;;
+        hist-bin)
+            printf '%s' "$payload" | cliphist decode
+            ;;
     esac
+}
+
+copy_history_info() {
+    local info="$1" payload tmp mime
+
+    payload="${info#*:}"
+    tmp="$(mktemp)"
+
+    printf '%s' "$payload" | cliphist decode > "$tmp"
+    mime="$(file -b --mime-type "$tmp" 2>/dev/null || true)"
+
+    if [[ "$mime" == text/* || "$mime" == application/json || "$mime" == application/xml ]]; then
+        wl-copy --type 'text/plain;charset=utf-8' < "$tmp"
+    elif [[ -n "$mime" && "$mime" != application/x-empty ]]; then
+        wl-copy --type "$mime" < "$tmp"
+    else
+        wl-copy < "$tmp"
+    fi
+
+    rm -f "$tmp"
 }
 
 selected_to_text() {
@@ -132,7 +155,6 @@ print_menu() {
                     }
                 }
             }
-            /\[\[ binary data/ { next }
             {
                 content = $0
                 sub(/^[0-9]+\t/, "", content)
@@ -154,7 +176,12 @@ print_menu() {
                 if (length(display) > 100) {
                     display = substr(display, 1, 100) "…"
                 }
-                printf "%s%cdisplay%c%s%cinfo%chist:%s%cmeta%c%s\n", display, 0, 31, display, 31, 31, $0, 31, 31, display
+                info_kind = "hist"
+                if (content ~ /^\[\[ binary data/) {
+                    info_kind = "hist-bin"
+                    display = "󰋩 " content_preview
+                }
+                printf "%s%cdisplay%c%s%cinfo%c%s:%s%cmeta%c%s\n", display, 0, 31, display, 31, 31, info_kind, $0, 31, 31, display
             }
         '
 }
@@ -165,7 +192,14 @@ if [[ "${1:-}" == "--rofi-script" ]]; then
     case "${ROFI_RETV:-0}" in
         1)
             if [[ -n "${ROFI_INFO:-}" ]]; then
-                decode_info "$ROFI_INFO" | wl-copy --type 'text/plain;charset=utf-8'
+                case "$ROFI_INFO" in
+                    hist:*|hist-bin:*)
+                        copy_history_info "$ROFI_INFO"
+                        ;;
+                    *)
+                        decode_info "$ROFI_INFO" | wl-copy --type 'text/plain;charset=utf-8'
+                        ;;
+                esac
             elif [[ "$selected" == 📌* ]]; then
                 encoded="$(pin_display_to_encoded "$selected" || true)"
                 [[ -n "$encoded" ]] && printf '%s' "$encoded" | base64 -d | wl-copy --type 'text/plain;charset=utf-8'
@@ -175,7 +209,9 @@ if [[ "${1:-}" == "--rofi-script" ]]; then
             exit 0
             ;;
         10)
-            if [[ -n "${ROFI_INFO:-}" ]]; then
+            if [[ "${ROFI_INFO:-}" == hist-bin:* ]]; then
+                :
+            elif [[ -n "${ROFI_INFO:-}" ]]; then
                 pin_text "$(decode_info "$ROFI_INFO")"
             elif [[ "$selected" == 📌* ]]; then
                 encoded="$(pin_display_to_encoded "$selected" || true)"
